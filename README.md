@@ -1,2 +1,2 @@
-# Purity
+# Purity Monitor
 Spring2025
