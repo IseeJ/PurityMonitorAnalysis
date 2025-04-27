@@ -85,11 +85,22 @@ def calc_correct(VC_max,VA_max, T_1, T_2, T_3, Edrift):
     mu =( (551.6 + 7158.3*(E/1000) + 4440.43*((E/1000)**(3/2)) + 4.29*((E/1000)**(5/2))) /
     (1 + (7158.3/551.6)*(E/1000) + 43.63*((E/1000)**2) + 0.2053*((E/1000)**3))) * ((T/89)**(-3/2))
     v_d = mu*E/1000000
-    """
-    k = (1e11) * ( ( (76.2749 / 1.88083) + 76.2749 * (E/1000) + 4.24596 * ((E/1000)**2) + 0 * ((E/1000)**3) + 0 * ((E/1000)**4) ) /
-              ( 1 + 1.88083 * (E/1000) + 2.62643 * ((E/1000)**2) + 0.0632332 *((E/1000)**3) - 0.000211009 * ((E/1000)**4) ) )
-    """
-    k = calculate_attachment_rate(E)
+
+    a1 = 39.4
+    a2 = 1.20062
+    a3 = 0
+    a4 = 0
+
+    b1 = 0.925794
+    b2 = 1.63816
+    b3 = 0
+    b4 = 0
+    k = (1e11) * ( ( (a1 / b1) + a1 * (E/1000) + a2 * ((E/1000)**2) + a3 * ((E/1000)**3) + a4 * ((E/1000)**4) ) /
+              ( 1 + b1 * (E/1000) + b2 * ((E/1000)**2) + b3 *((E/1000)**3) +b4 * ((E/1000)**4) ) )
+    #k = (1e11) * ( ( (76.2749 / 1.88083) + 76.2749 * (E/1000) + 4.24596 * ((E/1000)**2) + 0 * ((E/1000)**3) + 0 * ((E/1000)**4) ) /
+    #          ( 1 + 1.88083 * (E/1000) + 2.62643 * ((E/1000)**2) + 0.0632332 *((E/1000)**3) - 0.000211009 * ((E/1000)**4) ) )
+    
+    #k = calculate_attachment_rate(E)
     Cf = 1.4 # pF
     Rf = 100 # Mohm
     vgain = 2
@@ -274,7 +285,7 @@ def Fit_cathode(path,fname):
     plt.axvline(time[peak],  color='gray', linestyle='--')
     plt.axvline(time[start],  color='gray', linestyle='--', label='$t_1$')
 
-    plt.plot(dfs[ii]['time'].values,  dfs[ii]['cathode'].values, linewidth=0.5, color='black')                                                 
+    
     plt.plot(time_new, cathode_new, linewidth=0.5, color='black')                                                                              
     plt.plot(time_new, result.best_fit,color='red', linestyle='--', label='fit')
 
